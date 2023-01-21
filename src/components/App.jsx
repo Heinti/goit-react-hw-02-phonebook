@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { ContactForm } from './ContactForm/ContactForm';
 import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
-
+import { nanoid } from 'nanoid';
 
 export class App extends Component {
   state = {
@@ -16,9 +16,7 @@ export class App extends Component {
   };
 
   addContactFormData = data => {
-    // console.log(this.state.contacts)
-    const newContact = data;
-    console.log(newContact);
+    const newContact = {id: nanoid(), name: data.name, number:data.number };
 
     const contacts = this.state.contacts;
     const findDouble = contacts.find(({ name }) => {
@@ -29,7 +27,7 @@ export class App extends Component {
       return alert(`${findDouble.name} is already in contact`);
     }
     this.setState(prevState => ({
-      contacts: [...prevState.contacts, data],
+      contacts: [...prevState.contacts, newContact],
     }));
   };
 
@@ -40,7 +38,7 @@ export class App extends Component {
   };
 
   filterContactData = e => {
-    console.log(e);
+    // console.log(e);
     this.setState({ filter: e.target.value });
   };
 
@@ -53,7 +51,6 @@ export class App extends Component {
   }
   render() {
     const { filter } = this.state;
-
     const visibleContacts = this.getvisibleContacts()
 
     return (
